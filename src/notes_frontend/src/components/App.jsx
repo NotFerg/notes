@@ -3,12 +3,14 @@ import Header from "./Header";
 import Footer from "./Footer";
 import Note from "./Note";
 import CreateArea from "./CreateArea";
+import {notes_backend} from "../../../declarations/notes_backend"
 
 function App() {
   const [notes, setNotes] = useState([]);
 
   function addNote(newNote) {
     setNotes(prevNotes => {
+      notes_backend.createNote( newNote.title,newNote.content);
       return [...prevNotes, newNote];
     });
   }
