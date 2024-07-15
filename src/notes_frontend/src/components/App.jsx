@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
 import Note from "./Note";
@@ -11,9 +11,18 @@ function App() {
   function addNote(newNote) {
     setNotes(prevNotes => {
       notes_backend.createNote( newNote.title,newNote.content);
-      return [...prevNotes, newNote];
+      return [newNote , ...prevNotes,];
     });
   }
+
+  useEffect(() =>{
+    fetchData();
+  }, []);
+
+  async function fetchData(){
+    const notesArray = await notes_backend.readNotes();
+    setNotes(notesArray);
+  };
 
   function deleteNote(id) {
     setNotes(prevNotes => {
